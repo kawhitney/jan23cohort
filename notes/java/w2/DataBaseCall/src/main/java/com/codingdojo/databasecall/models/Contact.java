@@ -1,4 +1,4 @@
-package com.codingdojo.databasecall.controllers;
+package com.codingdojo.databasecall.models;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ public class Contact {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updatedAt;
 	
-	
+	public Contact() {}
 	// other getters and setters removed for brevity
     @PrePersist
     protected void onCreate(){
