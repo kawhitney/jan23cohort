@@ -19,17 +19,16 @@ public class HomeController {
     private BurgerServ burgerServ;
     
     @GetMapping("/") // reserve route
-    public String index() {
+    public String index(@ModelAttribute("burger") Burger burger, Model model) {
+    	model.addAttribute("allBurgers", burgerServ.allBurgers());
         return "index.jsp"; // map route to jsp
     }
     
     // create
-    @PostMapping("/addBurger")
-	public String addBurger(@Valid @ModelAttribute("burger") Burger burger, BindingResult result, Model model) {		
-        if (result.hasErrors()) {  
-        	System.out.println("=".repeat(20));
-        	System.out.printf("THERE IS AN ERROR%n");
-        	System.out.println("=".repeat(20));
+    @PostMapping("/createBurger")
+	public String createBurger(@Valid @ModelAttribute("burgerForm") Burger burger, BindingResult result, Model model) {		
+        if (result.hasErrors()) { 
+        	model.addAttribute("allBurgers", burgerServ.allBurgers());
             return "index.jsp";
         } 
         else {

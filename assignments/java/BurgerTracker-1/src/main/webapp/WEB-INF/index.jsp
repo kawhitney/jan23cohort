@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- for forms -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<!-- for validation -->
+<%@ page isErrorPage="true" %>
 
 <!DOCTYPE html>
 <html>
@@ -32,60 +37,56 @@
     </header>
     <!-- MAIN -->
     <main>
-        <div class="d-flex flex-column">
-            <h1>Burger Tracker</h1>
-            <table class="table">
+        <div class="d-flex flex-column  align-items-center">
+            <h1 class="w-75">Burger Tracker</h1>
+            <table class="table w-75">
                 <thead>
                     <!--- Column Labels --->
                     <tr>
-                      <th scope="col">1</th>
-                      <th scope="col">2</th>
-                      <th scope="col">3</th>
-                      <th scope="col">4</th>
+                        <th scope="col">Burger Name</th>
+                        <th scope="col">Restaurant Name</th>
+                        <th scope="col">Rating (out of 5)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!--- Row Data --->
                     <c:forEach items="${allBurgers}" var="i">
                     <tr>
-                        <th scope="row">A</th>
-                        <td>B</td>
-                        <td>C</td>
-                        <td>D</td>
+                        <th scope="row">${i.burgerName}</th>
+                        <td>${i.restaurant}</td>
+                        <td>${i.rating}</td>
                     </tr>
                     </c:forEach>
                 </tbody>
             </table>
+            <form:form action="/createBurger" method="post" modelAttribute="burgerForm" class="d-flex flex-column align-items-end py-2 w-auto">
+                <div class="d-flex flex-row justify-content-evenly p-2">
+                    <label for="burgerName" class="px-2">Burger Name:</label>
+                    <input type="text" name="burgerName" id=""/>
+                    <form:errors path="notes" class="text-warning ms-2"/>
+                </div>
+
+                <div class="d-flex flex-row justify-content-evenly p-2">
+                    <label for="restaurant" class="px-2">Restaurant Name:</label>
+                    <input type="text" name="restaurant" id=""/>
+                    <form:errors path="burgerName" class="text-warning ms-2"/>
+                </div>
+                
+                <div class="d-flex flex-row justify-content-evenly p-2">
+                    <label for="rating" class="px-2">Rating:</label>
+                    <input name="rating" type="number"/>
+                    <form:errors path="rating" class="text-warning ms-2 me-2 pe-1"/>   
+                </div>
+
+                <div class="d-flex flex-row justify-content-evenly p-2">
+                    <label for="notes" class="px-2">Notes:</label>
+                    <textarea name="notes" rows="5" cols="22"></textarea>
+                    <form:errors path="restaurant" class="text-warning ms-2"/>
+                </div>
+
+                <button class="btn btn-primary m-2">Add Burger</button>
+            </form:form>
         </div>
-        <form:form action="/addBurger" method="post">
-            <h2>Add a Burger:</h2>
-
-            <form:errors path="burgerName" class="text-warning"/>
-            <div class="d-flex flex-row my-3">
-                <label for="burgerName">Burger Name</label>
-                <input type="text" name="burgerName">
-            </div>
-
-            <form:errors path="restaurant" class="text-warning"/>
-            <div class="d-flex flex-row my-3">
-                <label for="restaurant">Restaurant Name</label>
-                <input type="text" name="restaurant">
-            </div>
-
-            <form:errors path="rating" class="text-warning"/>
-            <div class="d-flex flex-row my-3">
-                <label for="rating">Rating</label>
-                <input type="number" name="rating">
-            </div>
-
-            <form:errors path="notes" class="text-warning"/>
-            <div class="d-flex flex-row my-3">
-                <label for="notes">Notes</label>
-                <input type="textarea" name="notes">
-            </div>
-
-            <button>Add Burger</button>
-        </form:form>
     </main>
     <!-- FOOTER -->
     <footer>
