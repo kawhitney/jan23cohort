@@ -56,7 +56,7 @@
                         <th scope="row">${i.burgerName}</th>
                         <td>${i.restaurant}</td>
                         <td>${i.rating}</td>
-                        <td><a href="/burger/${i.id}/edit" class="p-0 mx-2">Edit</a></td>
+                        <td><a href="/burger/${i.id}/edit">Edit</a></td>
                     </tr>
                     </c:forEach>
                 </tbody>

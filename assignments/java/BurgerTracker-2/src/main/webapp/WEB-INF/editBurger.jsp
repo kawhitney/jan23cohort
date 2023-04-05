@@ -7,6 +7,7 @@
 <!-- for validation -->
 <%@ page isErrorPage="true" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,54 +40,34 @@
     <main>
         <div class="d-flex flex-column  align-items-center">
             <h1 class="w-75">Burger Tracker</h1>
-            <table class="table w-75">
-                <thead>
-                    <!--- Column Labels --->
-                    <tr>
-                        <th scope="col">Burger Name</th>
-                        <th scope="col">Restaurant Name</th>
-                        <th scope="col">Rating (out of 5)</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--- Row Data --->
-                    <c:forEach items="${allBurgers}" var="i">
-                    <tr>
-                        <th scope="row">${i.burgerName}</th>
-                        <td>${i.restaurant}</td>
-                        <td>${i.rating}</td>
-                        <td><a href="/burger/${i.id}/edit" class="p-0 mx-2">Edit</a></td>
-                    </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <form:form action="/createBurger" method="post" modelAttribute="burgerForm" class="d-flex flex-column align-items-end py-2 w-auto">
+            <form:form action="/burger/${burger.id}/update" method="post" modelAttribute="burgerForm" class="d-flex flex-column align-items-end py-2 w-auto">
+                <input type="hidden" name="_method" value="put">
+
                 <div class="d-flex flex-row justify-content-evenly p-2">
                     <label for="burgerName" class="px-2">Burger Name:</label>
-                    <input type="text" name="burgerName" id=""/>
+                    <input type="text" name="burgerName" value="${burger.burgerName}"/>
                     <form:errors path="notes" class="text-warning ms-2"/>
                 </div>
 
                 <div class="d-flex flex-row justify-content-evenly p-2">
                     <label for="restaurant" class="px-2">Restaurant Name:</label>
-                    <input type="text" name="restaurant" id=""/>
+                    <input type="text" name="restaurant" value="${burger.restaurant}"/>
                     <form:errors path="burgerName" class="text-warning ms-2"/>
                 </div>
                 
                 <div class="d-flex flex-row justify-content-evenly p-2">
                     <label for="rating" class="px-2">Rating:</label>
-                    <input name="rating" type="number"/>
+                    <input name="rating" type="number" value="${burger.rating}"/>
                     <form:errors path="rating" class="text-warning ms-2 me-2 pe-1"/>   
                 </div>
 
                 <div class="d-flex flex-row justify-content-evenly p-2">
                     <label for="notes" class="px-2">Notes:</label>
-                    <textarea name="notes" rows="5" cols="22"></textarea>
+                    <textarea name="notes" rows="5" cols="22"><c:out value="${burger.notes}"/></textarea>
                     <form:errors path="restaurant" class="text-warning ms-2"/>
                 </div>
 
-                <button class="btn btn-primary m-2">Add Burger</button>
+                <button class="btn btn-primary m-2">Update Burger</button>
             </form:form>
         </div>
     </main>
